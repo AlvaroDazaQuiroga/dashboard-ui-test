@@ -1,7 +1,6 @@
 package org.fundacionjala.dashboard.cucumber.stepdefinition.profile;
 
 import cucumber.api.java.en.And;
-
 import org.fundacionjala.dashboard.ui.pages.menu.Profile;
 import org.fundacionjala.dashboard.ui.pages.menu.Service;
 import org.fundacionjala.dashboard.ui.pages.menu.TopMenu;
@@ -11,11 +10,16 @@ import org.fundacionjala.dashboard.ui.pages.menu.TopMenu;
  */
 public class ServiceSteps {
 
-    @And("^Synchronize Mach2 and Pivotal$")
-    public void synchronizeMach2AndPivotal() {
+    @And("^Synchronize Mach2 and (.*)$")
+    public void synchronizeMach2AndPivotal(String serviceType) {
+    //    if (serviceType == "Pivotal") {
+     //   }else{
+
+       // }
         TopMenu topMenu = new TopMenu();
         Profile profile = topMenu.clickOnProfileMenu();
         Service service = profile.clickSetting();
+        service.clickOnConfigureProject(serviceType);
         service.setDescriptionTextField(String.valueOf(System.currentTimeMillis()));
         service.clickSaveButton();
 
