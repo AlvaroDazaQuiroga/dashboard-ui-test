@@ -15,6 +15,7 @@ import org.fundacionjala.dashboard.utils.Environment;
 public class GlobalHooks {
 
     private static final String PIVOTAL_TRACKER_SERVICE_NAME = "Pivotal Tracker";
+    public static final String JALA_AGILE_TRACKER_SERVICE_NAME = "Jala Agile Tracker";
 
     private boolean beforeAllFlag;
 
@@ -23,7 +24,6 @@ public class GlobalHooks {
         if (!beforeAllFlag) {
             // Login as Primary
             HomePage homePage = LoginPage.loginAsPrimaryUser();
-
             // Select the Service
             TopMenu topMenu = homePage.goToTopMenu();
             Profile profile = topMenu.clickOnProfileMenu();
@@ -33,6 +33,14 @@ public class GlobalHooks {
             service.setTokenTextField(Environment.getInstance().getToken());
             service.clickSaveButton();
 
+            homePage.goToTopMenu();
+            topMenu.clickOnProfileMenu();
+            profile.clickAddServiceButton();
+            service.selectServiceDropdown(JALA_AGILE_TRACKER_SERVICE_NAME);
+            service.setDescriptionTextField("Any Text");
+            service.setServerAddress("This is the server");
+            service.setTokenTextField("this is the token ");
+            service.clickSaveButton();
             topMenu.clickJalasoftIcon();
 
             beforeAllFlag = true;

@@ -10,17 +10,15 @@ import org.fundacionjala.dashboard.ui.pages.menu.TopMenu;
  */
 public class ServiceSteps {
 
-    @And("^Synchronize Mach2 and (.*)$")
-    public void synchronizeMach2AndPivotal(String serviceType) {
-    //    if (serviceType == "Pivotal") {
-     //   }else{
-
-       // }
+    @And("^Synchronize Mach2 whit (.*) and project (.*)$")
+    public void synchronizeMach2AndPivotal(String serviceType,String projectType) {
         TopMenu topMenu = new TopMenu();
         Profile profile = topMenu.clickOnProfileMenu();
         Service service = profile.clickSetting();
-        service.clickOnConfigureProject(serviceType);
         service.setDescriptionTextField(String.valueOf(System.currentTimeMillis()));
+        service.clickSaveButton();
+        service.clickOnConfigureProject(serviceType,projectType);
+        service.setDescriptionTextField("This is a test");
         service.clickSaveButton();
 
         topMenu.clickJalasoftIcon();

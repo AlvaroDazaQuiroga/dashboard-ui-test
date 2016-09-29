@@ -10,7 +10,8 @@ Feature: Project widget
       | number_of_done_iterations_to_show | 12              |
       | initial_velocity                  | 10              |
     And I expect the status code 200
-    And Synchronize Mach2 and Pivotal Tracker
+    And Synchronize Mach2 whit Pivotal Tracker and project Any Text
+
 
   @deleteAllProjects
   Scenario: Validate All information from pivotal projects are displayed in Mach2 table widget

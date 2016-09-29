@@ -1,8 +1,6 @@
 package org.fundacionjala.dashboard.ui.pages.menu;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.fundacionjala.dashboard.ui.pages.AbstractBasePage;
 import org.openqa.selenium.By;
@@ -26,6 +24,14 @@ public class Service extends AbstractBasePage {
     @FindBy(css = "div.ui.stackable.three.column.grid")
     private WebElement columnServices;
 
+    @FindBy(css = "input[name=\"serverAddress\"]")
+    private WebElement setJatServer;
+
+    public void setServerAddress(String server) {
+        setJatServer.clear();
+        setJatServer.sendKeys(server);
+    }
+
     public void selectServiceDropdown(String serviceName) {
         dropDownListOfServices.click();
         driver.findElement(By.xpath("//div[@class='menu transition visible']/div[text()='" + serviceName + "']")).click();
@@ -41,33 +47,23 @@ public class Service extends AbstractBasePage {
         descriptionTextField.sendKeys(description);
     }
 
+
     public Profile clickSaveButton() {
         saveButton.click();
         driver.navigate().refresh();
         return new Profile();
     }
 
-    public void clickOnConfigureProject(String projectType) {
-        Map<String, String> result = new HashMap<>();
+    public void clickOnConfigureProject(String projectType, String projectName) {
         List<WebElement> servicesList = columnServices.findElements(By.className("column"));
-
-
-        for (int i = 0; i < servicesList.size(); i++) {
-
-            if(servicesList.get(i).findElement(By.cssSelector("div.sub.header.truncated.text")).getText().equals(projectType))
-            {
-                servicesList.get(i).findElement(By.cssSelector("i.setting.link.icon")).click();
-              //  driver.findElement(By)
-
+        
+        for (WebElement x : servicesList) {
+            if (x.findElement(By.cssSelector("div.sub.header.truncated.text")).getText().equals(projectType)
+                    && x.findElement(By.cssSelector("h4.ui.header  > [class=\"truncated text\"]"))
+                    .getText().equals(projectName)) {
+                x.findElement(By.cssSelector("i.setting.link.icon")).click();
             }
-            System.out.println(servicesList.get(i).findElement(By.cssSelector("div.sub.header.truncated.text")).getText().equals(projectType));
         }
-
-
-
-         //driver.findElement(By.("+"projectType"+")).click;
-//        if(projectType=="Pivotal"){
-//
-//        }else if(projectType=="Jat")
     }
+
 }
