@@ -27,6 +27,11 @@ public class Service extends AbstractBasePage {
     @FindBy(css = "input[name=\"serverAddress\"]")
     private WebElement setJatServer;
 
+    @FindBy(css = "div.menu.transition.visible")
+    private WebElement availablesServices;
+
+
+
     public void setServerAddress(String server) {
         setJatServer.clear();
         setJatServer.sendKeys(server);
@@ -34,7 +39,13 @@ public class Service extends AbstractBasePage {
 
     public void selectServiceDropdown(String serviceName) {
         dropDownListOfServices.click();
-        driver.findElement(By.xpath("//div[@class='menu transition visible']/div[text()='" + serviceName + "']")).click();
+        //  driver.findElement(By.xpath("//div[@class='menu transition visible']/div[text()='" + serviceName + "']")).click();
+        List<WebElement> servicesNames = availablesServices.findElements(By.cssSelector("div.item"));
+        for (WebElement kindOfService : servicesNames) {
+            if (kindOfService.getText().equals(serviceName)) {
+                kindOfService.click();
+            }
+        }
     }
 
     public void setTokenTextField(String token) {
@@ -56,7 +67,7 @@ public class Service extends AbstractBasePage {
 
     public void clickOnConfigureProject(String projectType, String projectName) {
         List<WebElement> servicesList = columnServices.findElements(By.className("column"));
-        
+
         for (WebElement x : servicesList) {
             if (x.findElement(By.cssSelector("div.sub.header.truncated.text")).getText().equals(projectType)
                     && x.findElement(By.cssSelector("h4.ui.header  > [class=\"truncated text\"]"))
